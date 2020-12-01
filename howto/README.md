@@ -2,6 +2,6 @@
 sort: 2
 ---
 
-# Second Menu
+# How-To
 
 {% include list.liquid %}

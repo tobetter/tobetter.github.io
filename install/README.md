@@ -2,6 +2,6 @@
 sort: 1
 ---
 
-# First Menu
+# Installation
 
 {% include list.liquid %}
