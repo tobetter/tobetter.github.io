@@ -1,7 +1,7 @@
 ---
-sort: 1
+sort: 50
 ---
 
-# First Menu
+# Guides
 
 {% include list.liquid %}
