@@ -2,5 +2,5 @@
 sort: 1
 ---
 
-# Sub menu 1
+# What's 'LinuxFactory'
 
