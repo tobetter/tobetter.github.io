@@ -1,5 +1,5 @@
 ---
-sort: 1
+sort: 10
 ---
 
 # Netboot Installer
