@@ -1,7 +1,3 @@
----
-sort: 10
----
-
 # Netboot Installer
 
 ##### Installing Debian Buster using Netboot Installer

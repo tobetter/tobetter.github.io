@@ -1,7 +1,3 @@
----
-sort: 20
----
-
 # Prebuilt Image
 
 Only provide the server image at the moment, but Desktop packages can be

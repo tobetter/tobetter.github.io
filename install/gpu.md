@@ -1,7 +1,3 @@
----
-sort: 30
----
-
 # GPU acceleration
 
 ## ARM Mali Bifrost
