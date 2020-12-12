@@ -17,5 +17,6 @@ network:
 ```
 
 ## See also
-https://askubuntu.com/questions/1039233/no-wired-connection-wired-unmanaged-ubuntu-18-04
-https://askubuntu.com/questions/1267212/ethernet-connection-not-working-on-ubuntu-20-04
+
+* [No wired connection - Wired unmanaged ubuntu 18.04](https://askubuntu.com/questions/1039233/no-wired-connection-wired-unmanaged-ubuntu-18-04)
+* [Ethernet connection not working on Ubuntu 20.04](https://askubuntu.com/questions/1267212/ethernet-connection-not-working-on-ubuntu-20-04)
