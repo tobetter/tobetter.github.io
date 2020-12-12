@@ -6,6 +6,7 @@ This document is only intended to support ODROID SBC from Hardkernel, supported 
 * [ODROID-N2Plus](https://www.hardkernel.com/shop/odroid-n2-with-4gbyte-ram-2/)
 * [ODROID-C4](https://www.hardkernel.com/shop/odroid-c4/)
 * [ODROID-HC4](https://www.hardkernel.com/shop/odroid-hc4/)
+
 ---
 
 ## Quick start
