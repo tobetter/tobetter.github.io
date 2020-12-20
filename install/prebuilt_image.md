@@ -1,4 +1,4 @@
-# Installing using prebuilt Image
+# Prebuilt OS Image
 
 This is the legacy and general mothod that most SBC vendors and OS developer groups provide. Basically a user download the OS image uploaded to a storage server of OS image provider and flash the image to SD or eMMC memory card using a couple of flashing tools. Then a user only need to insert the memory card to SBC and boot from it directly, this is most easist way if user is not borthered to change the OS setup.
 
