@@ -19,6 +19,8 @@ $ sudo apt install git build-essential bc flex bison libssl-dev libncurses-dev
 ```bash
 $ git clone --depth 1 https://github.com/tobetter/linux \
 -b `uname -r | awk -F'.' '{print "odroid-" $1 "." $2 ".y"}'`
+$ cd linux
+$ git branch
 ```
 
 ## Compile your custom kernel
