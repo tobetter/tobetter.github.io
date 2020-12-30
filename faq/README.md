@@ -13,4 +13,13 @@ Debian and Ubuntu already provide the Netboot Installer but their Netboot Instal
 #### Where do the packages are from?
 In order to provide ODROID specific features with the provided OS, a private package archive server is running from - https://ppa.linuxfactory.or.kr - and this server provides the customized packages for ODROID only.
 
+#### mali-bifrost-wayland-driver : Depends: mali-bifrost-dkms but it is not installable ####
+To fix this, please run the commands below
+```
+echo 'deb http://ppa.linuxfactory.or.kr focal contrib' > /etc/apt/sources.list.d/ppa_linuxfactory_or_kr.list
+apt-get update
+apt-get install mali-bifrost-wayland-driver
+```
+And reboot afterwards.
+
 {% include list.liquid %}
