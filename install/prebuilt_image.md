@@ -7,6 +7,7 @@ For this method, only server image is provided at the momenty while Hardkernel p
 * [ODROID-N2/N2Plus](odroidn2/image.md)
 * [ODROID-C4](odroidc4/image.md)
 * [ODROID-HC4](odroidhc4/image.md)
+* [ODROID-XU4/HC1/HC2](odroidxu4/image.md)
 
 ## See also
 * [Balena Etcher](https://www.balena.io/etcher/)
