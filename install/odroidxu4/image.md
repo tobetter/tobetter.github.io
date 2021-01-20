@@ -2,7 +2,11 @@
 
 >:warning: The default account is 'odroid' and its password is 'odroid', please do change the password at the first boot.
 
+## Debian 9 (Buster)
+* [20210119](http://ppa.linuxfactory.or.kr/images/raw/armhf/debian-buster-server-odroidxu4-20210119.img.xz) - Linux kernel v5.10
+
 ## Ubuntu 20.04
+* [20210118](http://ppa.linuxfactory.or.kr/images/raw/armhf/ubuntu-20.04-server-odroidxu4-20210118.img.xz) - Linux kernel v5.10
 * [20210111](http://ppa.linuxfactory.or.kr/images/raw/armhf/ubuntu-20.04-server-odroidxu4-20210111.img.xz) - Linux kernel v5.10
 
 ### Please do this before flashing the image to eMMC
