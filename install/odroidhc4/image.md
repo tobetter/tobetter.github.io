@@ -4,9 +4,11 @@
 the password at the first boot.
 
 ## Ubuntu 20.04
+* [20210301](https://bit.ly/3sDcLCl) - Linux kernel v5.11
 * [20201218](https://bit.ly/3nr8obk) - Linux kernel v5.10
 * [20201120](https://bit.ly/3799CRR) - Linux kernel v5.9
 
 ## Ubuntu 20.10
+* [20210301](https://bit.ly/2ZX4Nrw) - Linux kernel v5.11
 * [20201218](https://bit.ly/2KGwaBS) - Linux kernel v5.10
 * [20201120](https://bit.ly/3pNlK3q) - Linux kernel v5.9
