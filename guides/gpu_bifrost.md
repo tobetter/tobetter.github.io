@@ -55,5 +55,5 @@ $ sudo reboot
 ### Error when install **mali-bifrost-dkms**
 This error could be caused when the Linux header package is not installed, so highly recommend to install the package before installing Bifrost packages.
 ```bash
-$ sudo apt install linux-headers-$(uname -a)
+$ sudo apt install linux-headers-$(uname -r)
 ```
