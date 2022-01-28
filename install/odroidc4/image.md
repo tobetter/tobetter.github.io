@@ -1,7 +1,13 @@
-# ODROID-C4
+# ODROID-C4/HC4
 
 >:warning: The default account is 'odroid' and its password is 'odroid', please do change
 the password at the first boot.
+
+## Debian 10
+* [20210301](https://bit.ly/3sC40sm) - Linux kernel v5.10
+
+## Debian 11
+* [20220128](https://bit.ly/3KORI9U) - Linux kernel v5.15
 
 ## Ubuntu 21.04
 * [20210502](https://bit.ly/334K9Ho) - Linux kernel v5.11

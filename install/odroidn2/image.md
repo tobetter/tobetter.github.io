@@ -3,6 +3,12 @@
 >:warning: The default account is 'odroid' and its password is 'odroid', please do change
 the password at the first boot.
 
+## Debian 10
+* [20210301](https://bit.ly/3kzbWaR) - Linux kernel v5.10
+
+## Debian 11
+* [20220128](https://bit.ly/33VQaKB) - Linux kernel v5.15
+
 ## Ubuntu 21.04
 * [20210502](https://bit.ly/3h8AEiT) - Linux kernel v5.11
 
