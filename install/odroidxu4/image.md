@@ -2,7 +2,7 @@
 
 >:warning: The default account is 'odroid' and its password is 'odroid', please do change the password at the first boot.
 
-## Debian 9 (Buster)
+## Debian 10 (Buster)
 * [20210119](http://ppa.linuxfactory.or.kr/images/raw/armhf/debian-buster-server-odroidxu4-20210119.img.xz) - Linux kernel v5.10
 
 ## Ubuntu 20.04

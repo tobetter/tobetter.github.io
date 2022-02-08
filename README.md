@@ -17,9 +17,10 @@ The document in this page provide instructions to install and manage Linux mainl
 The commands in the document are not compatible or equivalent to the contents in the ODROID Wiki since the OS images provided through this page offer the Linux upstream kernel; consequently its configuration and features are different.
 
 ## Supported OS versions
-* Debian 9 (Buster) - stable
-* Debian 10 (Bullseye) - coming
-* [Ubuntu 20.04](https://forum.odroid.com/viewtopic.php?f=182&t=37109) - stable
-* [Ubuntu 20.10](https://forum.odroid.com/viewtopic.php?f=52&t=40761) - experimental
+* Debian 10 (Buster)
+* Debian 11 (Bullseye)
+* [Ubuntu 20.04](https://forum.odroid.com/viewtopic.php?f=182&t=37109)
+* [Ubuntu 20.10](https://forum.odroid.com/viewtopic.php?f=52&t=40761)
+* [Ubuntu 21.10](https://forum.odroid.com/viewtopic.php?f=52&t=42981)
 
 ### [Start OS installation](install/README.md)
