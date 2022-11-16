@@ -10,6 +10,7 @@ the password at the first boot.
 * [20210301](https://bit.ly/3kzbWaR) - Linux kernel v5.10
 
 ## Ubuntu 22.04
+* [20221115](https://bit.ly/3twDdjJ) - Linux kernel v5.15
 * [20220531](https://bit.ly/3lYFvnP) - Linux kernel v5.15
 
 ## Ubuntu 20.04

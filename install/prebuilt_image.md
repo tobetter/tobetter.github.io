@@ -5,6 +5,7 @@ This is the legacy and general mothod that most SBC vendors and OS developer gro
 For this method, only server image is provided at the momenty while Hardkernel provides two type of images - **Minimal** and **Ubuntu Mate Desktop**. The server image is to offer the bare minimal Debian/Ubuntu OS with console mode, t can be extended to a desktop OS with GUI after installing a desktop meta package such as Gnome Desktop or KDE Destip. The server image will be released for several ODROID SBC as different file image files. Please visit the links for your ODROID SBC to download the image.
 
 * [ODROID-N2/N2Plus](odroidn2/image.md)
+* [ODROID-N2L](odroidn2l/image.md)
 * [ODROID-C4](odroidc4/image.md)
 * [ODROID-HC4](odroidhc4/image.md)
 * [ODROID-XU4/HC1/HC2](odroidxu4/image.md)
