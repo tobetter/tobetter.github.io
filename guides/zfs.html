@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Z File System (ZFS)</title>
+    <meta name="description" content="Linux Factory Documentation Site">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>The Z File System (ZFS) | Linux Factory Docs</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="The Z File System (ZFS)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Linux Factory Documentation Site" />
+<meta property="og:description" content="Linux Factory Documentation Site" />
+<link rel="canonical" href="https://docs.linuxfactory.or.kr/guides/zfs.html" />
+<meta property="og:url" content="https://docs.linuxfactory.or.kr/guides/zfs.html" />
+<meta property="og:site_name" content="Linux Factory Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="The Z File System (ZFS)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Linux Factory Documentation Site","headline":"The Z File System (ZFS)","url":"https://docs.linuxfactory.or.kr/guides/zfs.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Linux Factory Docs</a></h1>
+    </header>
+
+    <main>
+      <h1 id="the-z-file-system-zfs">The Z File System (ZFS)</h1>
+
+<blockquote>
+  <p><span style="color:red">The command in this page has been tested with 5.7 kernel only, not with 5.8 and later. Please let us know if you have success with newer kernel version</span></p>
+</blockquote>
+
+<h2 id="background">Background</h2>
+<p>Instead of installing the <strong>zfs-dkms</strong> package, I’ve tried to build the latest version 0.8.4 from Github and zfs*.ko can be built with these commands. I’ve not tested if zfs work or not, so please do at your own risk.</p>
+
+<h2 id="check-kernel-version">Check kernel version</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">uname</span> <span class="nt">-a</span>
+Linux ubuntu 5.7.0-odroid-arm64 <span class="c">#1 SMP PREEMPT Ubuntu 5.7.2-202006130259~focal (2020-06-12) aarch64 aarch64 aarch64 GNU/Linux</span>
+</code></pre></div></div>
+
+<h2 id="install">Install</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt purge zfs-dkms libzfs2linux zfs-zed zfsutils-linux
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>autoconf automake libtool zlib1g-dev uuid-dev libblkid-dev libssl-dev
+<span class="nv">$ </span>wget https://github.com/openzfs/zfs/archive/zfs-0.8.4.tar.gz
+<span class="nv">$ </span><span class="nb">tar </span>xzvf zfs-0.8.4.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>zfs-zfs-0.8.4
+<span class="nv">$ </span>./configure <span class="nt">--prefix</span><span class="o">=</span>/usr
+<span class="nv">$ </span>make
+<span class="nv">$ </span><span class="nb">sudo </span>make <span class="nb">install</span>
+</code></pre></div></div>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Linux Factory Docs. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kernel message through UART debugging port</title>
+    <meta name="description" content="Linux Factory Documentation Site">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Kernel message through UART debugging port | Linux Factory Docs</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Kernel message through UART debugging port" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Linux Factory Documentation Site" />
+<meta property="og:description" content="Linux Factory Documentation Site" />
+<link rel="canonical" href="https://docs.linuxfactory.or.kr/guides/kernel_log.html" />
+<meta property="og:url" content="https://docs.linuxfactory.or.kr/guides/kernel_log.html" />
+<meta property="og:site_name" content="Linux Factory Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Kernel message through UART debugging port" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Linux Factory Documentation Site","headline":"Kernel message through UART debugging port","url":"https://docs.linuxfactory.or.kr/guides/kernel_log.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Linux Factory Docs</a></h1>
+    </header>
+
+    <main>
+      <h1 id="kernel-message-through-uart-debugging-port">Kernel message through UART debugging port</h1>
+
+<p>By default, kernel message through UART debugging port is disabled since
+removing kernel message reduce the boot time a bit and most regular user do
+not have UART debugging port.</p>
+
+<h2 id="fix-up-the-booting-parameters">Fix up the booting parameters</h2>
+
+<ol>
+  <li>Uncomment the line where <strong>ttyAML0,115200n8</strong> is specified from the file
+<strong>/usr/share/flash-kernel/ubootenv.d/upstream/10-console</strong>. This line
+will enable the UART debugging port for the kernel message.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> /usr/share/flash-kernel/ubootenv.d/upstream/10-console
+<span class="c"># Default serial console</span>
+<span class="c"># setenv console "ttyAML0,115200n8"</span>
+<span class="se">\</span>
+<span class="c"># Default TTY console</span>
+setenv bootargs <span class="s2">"</span><span class="k">${</span><span class="nv">bootargs</span><span class="k">}</span><span class="s2"> console=tty1"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Remove <strong>quiet</strong> from the file <strong>/etc/default/flash-kernel</strong>.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> /etc/default/flash-kernel<span class="se">\</span>
+<span class="nv">LINUX_KERNEL_CMDLINE</span><span class="o">=</span><span class="s2">"root=UUID=6322eafd-5b4c-474d-83ee-77c7223ccbd9 rootwait ro quiet splash"</span><span class="se">\</span>
+<span class="nv">LINUX_KERNEL_CMDLINE_DEFAULTS</span><span class="o">=</span><span class="s2">""</span>
+</code></pre></div>    </div>
+  </li>
+  <li>In order to apply the change to the boot script, run <strong>update-bootscript</strong>.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo</span> /usr/sbin/update-bootscript
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Linux Factory Docs. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+

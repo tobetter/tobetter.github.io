@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Acceleration with ARM Mali Panfrost</title>
+    <meta name="description" content="Linux Factory Documentation Site">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>GPU Acceleration with ARM Mali Panfrost | Linux Factory Docs</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="GPU Acceleration with ARM Mali Panfrost" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Linux Factory Documentation Site" />
+<meta property="og:description" content="Linux Factory Documentation Site" />
+<link rel="canonical" href="https://docs.linuxfactory.or.kr/guides/gpu_panfrost.html" />
+<meta property="og:url" content="https://docs.linuxfactory.or.kr/guides/gpu_panfrost.html" />
+<meta property="og:site_name" content="Linux Factory Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="GPU Acceleration with ARM Mali Panfrost" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Linux Factory Documentation Site","headline":"GPU Acceleration with ARM Mali Panfrost","url":"https://docs.linuxfactory.or.kr/guides/gpu_panfrost.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Linux Factory Docs</a></h1>
+    </header>
+
+    <main>
+      <h1 id="gpu-acceleration-with-arm-mali-panfrost">GPU Acceleration with ARM Mali Panfrost</h1>
+
+<p>Panfrost is a free and open source driver for Mali Midgard and Bifrost GPU and public code hosting is on GitLab. For ODROID, this GPU acceleration driver is only supported with the Linux kernel 5.10 and later. Since the Panfrost driver is still experimental driver and being updated by the developers, the features and its stability will be greatly improved.</p>
+<blockquote>
+  <p><span style="color:red">Panfrost and Bifrost driver must not be loaded together in the same system.</span></p>
+</blockquote>
+
+<h2 id="showcase">Showcase</h2>
+<blockquote>
+  <p>Ubuntu 20.10 KDE Desktop with ARM Mali Panfrost driver</p>
+</blockquote>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/I2EzbDVGH4w" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<h2 id="install">Install</h2>
+<p>Panfrost driver is is provided with the kernel package, therefore no additional commands are not required other than kernel package update.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt dist-upgrade
+</code></pre></div></div>
+
+<h2 id="check-if-mali-panfrost-driver-is-loaded">Check if Mali Panfrost driver is loaded</h2>
+<p>Panfrost is provided as the Linux kernel dirver module, the driver <strong>panfrost.ko</strong> must be loaded after rebooting.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>lsmod | <span class="nb">grep </span>panfrost
+panfrost              69632  0
+</code></pre></div></div>
+
+<h2 id="test-with-mali-panfrost-driver">Test with Mali Panfrost driver</h2>
+<p>The <strong>glmark2</strong> is a good utility to test GPU performance.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>glmark2
+<span class="nv">$ </span>glmark2
+</code></pre></div></div>
+
+<h2 id="see-also">See also</h2>
+<p>[1] https://panfrost.freedesktop.org/</p>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Linux Factory Docs. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+

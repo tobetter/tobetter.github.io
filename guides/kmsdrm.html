@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kernel mode setting</title>
+    <meta name="description" content="Linux Factory Documentation Site">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Kernel mode setting | Linux Factory Docs</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Kernel mode setting" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Linux Factory Documentation Site" />
+<meta property="og:description" content="Linux Factory Documentation Site" />
+<link rel="canonical" href="https://docs.linuxfactory.or.kr/guides/kmsdrm.html" />
+<meta property="og:url" content="https://docs.linuxfactory.or.kr/guides/kmsdrm.html" />
+<meta property="og:site_name" content="Linux Factory Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Kernel mode setting" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Linux Factory Documentation Site","headline":"Kernel mode setting","url":"https://docs.linuxfactory.or.kr/guides/kmsdrm.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Linux Factory Docs</a></h1>
+    </header>
+
+    <main>
+      <h1 id="kernel-mode-setting">Kernel mode setting</h1>
+
+<p>Kernel mode setting (KMS) is a method to set the display resolution in the
+Linux kernel during boot up, this method also effectly work when:</p>
+<ul>
+  <li>you want to set the display mode with specific resolution</li>
+  <li>the display device is old</li>
+  <li>EDID data is corrupted or it contains incorrect one</li>
+</ul>
+
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="edid-binary">EDID binary</h3>
+
+<p>You need to download and install the EDID binary file to your Linux. Please open
+the link to find out the supported EDID binaries.
+https://github.com/akatrevorjay/edid-generator</p>
+
+<p>Please run these commands to download the display resolution for 1920x1080.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo mkdir</span> <span class="nt">-p</span> /usr/lib/firmware/edid/
+<span class="nv">$ </span><span class="nb">sudo </span>wget https://github.com/akatrevorjay/edid-generator/blob/master/1920x1080.bin <span class="nt">-P</span> /usr/lib/firmware/edid
+</code></pre></div></div>
+<h2 id="apply-new-resolution">Apply new resolution</h2>
+<p>In order to apply the new display resolution with this method, the boot script
+must be updated with a kernel parameter that specify the display resoltuion so that
+the Linux kernel loads the EDID binary on booting.</p>
+
+<p>Add this line to <strong>/usr/share/flash-kernel/ubootenv.d/upstream/90-misc</strong> to select the display resolution as 1920x1080.</p>
+<blockquote>
+  <p>setenv bootargs “${bootargs} drm_kms_helper.edid_firmware=HDMI-A-1:edid/1920x1080.bin”</p>
+</blockquote>
+
+<p>So, the file <strong>/usr/share/flash-kernel/ubootenv.d/upstream/90-misc</strong> must be like this.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> /usr/share/flash-kernel/ubootenv.d/upstream/90-misc 
+setenv bootargs <span class="s2">"</span><span class="k">${</span><span class="nv">bootargs</span><span class="k">}</span><span class="s2"> cma=800M"</span>
+setenv bootargs <span class="s2">"</span><span class="k">${</span><span class="nv">bootargs</span><span class="k">}</span><span class="s2"> clk_ignore_unused"</span>
+setenv bootargs <span class="s2">"</span><span class="k">${</span><span class="nv">bootargs</span><span class="k">}</span><span class="s2"> drm_kms_helper.edid_firmware=HDMI-A-1:edid/1920x1080.bin"</span>
+</code></pre></div></div>
+
+<p>Then update the boot script to apply the change and reboot.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>update-bootscript
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Linux Factory Docs. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+

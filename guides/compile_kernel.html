@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Linux kernel</title>
+    <meta name="description" content="Linux Factory Documentation Site">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Custom Linux kernel | Linux Factory Docs</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Custom Linux kernel" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Linux Factory Documentation Site" />
+<meta property="og:description" content="Linux Factory Documentation Site" />
+<link rel="canonical" href="https://docs.linuxfactory.or.kr/guides/compile_kernel.html" />
+<meta property="og:url" content="https://docs.linuxfactory.or.kr/guides/compile_kernel.html" />
+<meta property="og:site_name" content="Linux Factory Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Custom Linux kernel" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Linux Factory Documentation Site","headline":"Custom Linux kernel","url":"https://docs.linuxfactory.or.kr/guides/compile_kernel.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Linux Factory Docs</a></h1>
+    </header>
+
+    <main>
+      <h1 id="custom-linux-kernel">Custom Linux kernel</h1>
+
+<p>This page introduce how you can build the Linux kernel by yourself.</p>
+
+<p>Linux kernel source is provided through Github repository and updated whenever
+new kernel package is released. In order to build the Linux kernel, you must
+download its kernel source using ‘git’ command and switch to the decent branch
+which you are willing to build.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="package-requirements">Package requirements</h3>
+<p>In order to build Linux kernel, you need to install developement packages
+required.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>git build-essential bc flex bison libssl-dev libncurses-dev
+</code></pre></div></div>
+
+<h3 id="download-the-source-code">Download the Source code</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git clone <span class="nt">--depth</span> 1 https://github.com/tobetter/linux <span class="se">\</span>
+<span class="nt">-b</span> <span class="sb">`</span><span class="nb">uname</span> <span class="nt">-r</span> | <span class="nb">awk</span> <span class="nt">-F</span><span class="s1">'.'</span> <span class="s1">'{print "odroid-" $1 "." $2 ".y"}'</span><span class="sb">`</span>
+<span class="nv">$ </span><span class="nb">cd </span>linux
+<span class="nv">$ </span>git branch
+</code></pre></div></div>
+
+<h2 id="compile-your-custom-kernel">Compile your custom kernel</h2>
+<p>Unline the generic desktop, your Ubuntu/Debian uses a package <strong>flash-kernel</strong>
+that helps to install the Linux kernel packages and the device tree file for a
+target device. You have to tweak a couple of things once in order to let the
+package <strong>flash-kernel</strong> install your custom kernel properly.</p>
+
+<h3 id="compile">Compile</h3>
+<blockquote>
+  <p>:warning: Use these commands once before preceeding.</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cp</span> /boot/config-<span class="si">$(</span><span class="nb">uname</span> <span class="nt">-r</span><span class="si">)</span> .config
+<span class="nv">$ </span><span class="nb">sed</span> <span class="nt">-i</span> <span class="s2">"s/.*CONFIG_LOCALVERSION_AUTO.*/CONFIG_LOCALVERSION_AUTO=y/g"</span> .config
+<span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"-odroid-arm64"</span> <span class="o">&gt;</span> .scmversion
+</code></pre></div>  </div>
+  <p>Then, start to compile the Linux kernel source.</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make oldconfig
+<span class="nv">$ </span>make <span class="nt">-j8</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<h3 id="install">Install</h3>
+<blockquote>
+  <p>:warning: Use these commands once before preceeding.</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo sed</span> <span class="nt">-i</span> <span class="s2">"s/^force=.*</span><span class="nv">$/</span><span class="s2">force=</span><span class="se">\"</span><span class="s2">yes</span><span class="se">\"</span><span class="s2">/g"</span> /usr/share/flash-kernel/functions
+<span class="nv">$ </span><span class="nb">sudo ln</span> <span class="nt">-s</span> <span class="nv">$PWD</span>/arch/arm64/boot/dts /usr/lib/linux-image-<span class="si">$(</span><span class="nb">cat </span>include/config/kernel.release<span class="si">)</span>
+</code></pre></div>  </div>
+  <p>Then, you can install the Linux kernel image and its drivers. The boot script,
+the device tree file and initramfs will be updated while installing by the
+<strong>flash-kernel</strong>. Please note that your Linux kernel version must ends with
+<strong>-odroid-arm64</strong>, so ensure the last log with <strong>make modules_install</strong>.</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>make modules_install
+<span class="nv">$ </span><span class="nb">sudo </span>make <span class="nb">install</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<p>For example,</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>make modules_install
+...
+DEPMOD  5.9.15-odroid-arm64
+<span class="nv">$ </span><span class="nb">sudo </span>make <span class="nb">install
+</span>sh ./arch/arm64/boot/install.sh 5.9.15-odroid-arm64 <span class="se">\</span>
+<span class="nb">arch</span>/arm64/boot/Image System.map <span class="s2">"/boot"</span>
+run-parts: executing /etc/kernel/postinst.d/apt-auto-removal 5.9.15-odroid-arm64 /boot/vmlinuz-5.9.15-odroid-arm64
+run-parts: executing /etc/kernel/postinst.d/initramfs-tools 5.9.15-odroid-arm64 /boot/vmlinuz-5.9.15-odroid-arm64
+update-initramfs: Generating /boot/initrd.img-5.9.15-odroid-arm64
+Using DTB: amlogic/meson64_odroidn2_plus.dtb
+Installing amlogic into /boot/dtbs/5.9.15-odroid-arm64/amlogic/
+Installing amlogic into /boot/dtbs/5.9.15-odroid-arm64/amlogic/
+flash-kernel: installing version 5.9.15-odroid-arm64
+Generating boot script u-boot image... <span class="k">done</span><span class="nb">.</span>
+Taking backup of boot.scr.
+Installing new boot.scr.
+run-parts: executing /etc/kernel/postinst.d/unattended-upgrades 5.9.15-odroid-arm64 /boot/vmlinuz-5.9.15-odroid-arm64
+run-parts: executing /etc/kernel/postinst.d/update-notifier 5.9.15-odroid-arm64 /boot/vmlinuz-5.9.15-odroid-arm64
+run-parts: executing /etc/kernel/postinst.d/zz-flash-kernel 5.9.15-odroid-arm64 /boot/vmlinuz-5.9.15-odroid-arm64
+Using DTB: amlogic/meson64_odroidn2_plus.dtb
+Installing amlogic into /boot/dtbs/5.9.15-odroid-arm64/amlogic/
+Installing amlogic into /boot/dtbs/5.9.15-odroid-arm64/amlogic/
+flash-kernel: installing version 5.9.15-odroid-arm64
+Generating boot script u-boot image... <span class="k">done</span><span class="nb">.</span>
+Taking backup of boot.scr.
+Installing new boot.scr.
+</code></pre></div></div>
+
+<h2 id="tips">Tips</h2>
+<h3 id="back-up-bootbootscr">Back up <strong>/boot/boot.scr</strong></h3>
+<p>Installing your custom Linux kernel will update the boot script with the
+version of your custom Linux kernel. It’s good idea to back up the boot
+script <strong>/boot/boot.scr</strong> to other file name and revert it when your
+custom Linux kernel boot is failed.</p>
+
+<h3 id="multiple-kernel-versions">Multiple kernel versions</h3>
+<p>Your custom kernel won’t overwrite the Linux kernel files installed with
+packages. So after installing your custom Linux kernel image, there would be
+multiple Linux kernel files in <strong>/boot</strong> directory and they can be listed with
+the command <strong>linux-version list</strong>.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>linux-version list
+5.9.0-odroid-arm64
+5.9.15-odroid-arm64
+</code></pre></div></div>
+
+<h3 id="switching-the-kernel-version">Switching the kernel version</h3>
+<p>Suppose that you are running your custom kernel, but you want to switch to
+the Linux kernel version installed with a kernel which is presented as
+<strong>5.9.0-odroid-arm64</strong>, you can simply switch with <strong>flash-kernel</strong> with
+a specific kernel version.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>flash-kernel <span class="nt">--force</span> 5.9.0-odroid-arm64
+</code></pre></div></div>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Linux Factory Docs. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+

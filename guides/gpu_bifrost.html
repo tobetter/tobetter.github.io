@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Acceleration with ARM Mali Bifrost</title>
+    <meta name="description" content="Linux Factory Documentation Site">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>GPU Acceleration with ARM Mali Bifrost | Linux Factory Docs</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="GPU Acceleration with ARM Mali Bifrost" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Linux Factory Documentation Site" />
+<meta property="og:description" content="Linux Factory Documentation Site" />
+<link rel="canonical" href="https://docs.linuxfactory.or.kr/guides/gpu_bifrost.html" />
+<meta property="og:url" content="https://docs.linuxfactory.or.kr/guides/gpu_bifrost.html" />
+<meta property="og:site_name" content="Linux Factory Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="GPU Acceleration with ARM Mali Bifrost" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Linux Factory Documentation Site","headline":"GPU Acceleration with ARM Mali Bifrost","url":"https://docs.linuxfactory.or.kr/guides/gpu_bifrost.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Linux Factory Docs</a></h1>
+    </header>
+
+    <main>
+      <h1 id="gpu-acceleration-with-arm-mali-bifrost">GPU Acceleration with ARM Mali Bifrost</h1>
+
+<p>Bifrost is the third generation of ARM Mali GPUs and its family includes the Mali-G30, Mali-G50 and Mali-G70 series of products. The ODROID with ARM Mali Bifrost are ODROID-N2/N2Plus/C4/HC4 based on Amlogic S905X3 and S922X. This page guide you to use the open source ARM Mali GPU driver with its user space driver blob which is the proprietary of ARM. The open source ARM Mali GPU driver is from <a href="https://developer.arm.com/tools-and-software/graphics-and-gaming/mali-drivers/bifrost-kernel">here</a> and currently <strong>BX301A01B-SW-99002-r23p0</strong> has been ported to Linux kernel 5.7 and later. Since ARM Mali GPU driver is the proprietary of ARM, supported features are limited. Currently Mali <strong>Wayland driver</strong> has been tested and <strong>X11 is not supported yet</strong>.</p>
+
+<h2 id="showcase">Showcase</h2>
+<blockquote>
+  <p>Ubuntu 20.04 Gnome Desktop with ARM Mali Bifrost</p>
+</blockquote>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/J9EuXwxVik0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+
+<h2 id="install">Install</h2>
+
+<p>The Bifrost driver is not provided along with Linux kernel package, but provided with individual package. The installation is quite simple but need some tweaks when it does not work after following the installation commands. And the driver works only after rebooting. At the moment, only Wayland backed ARM Mali Bifrost driver is available and verified. Therefore, a desktop environment with X11 would not.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt dist-upgrade
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>mali-bifrost-wayland-driver
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+<h2 id="check-if-mali-bifrost-driver-is-loaded">Check if Mali Bifrost driver is loaded</h2>
+<p>Bifrost driver is provided as the Linux kernel driver module, so the driver <strong>malk_kbase.ko</strong> must be loaded after rebooting.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>lsmod | <span class="nb">grep </span>mali_kbase
+mali_kbase            61440  0
+</code></pre></div></div>
+
+<h2 id="test-with-mali-bifrost-driver">Test with Mali Bifrost driver</h2>
+<p>The <strong>glmark2-es2-wayland</strong> is the best benchmark tool since current Mali Bifrost driver suppports only Wayland userspace driver.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>glmark2-es2-wayland
+<span class="nv">$ </span>glmark2-es2-wayland
+</code></pre></div></div>
+
+<h2 id="uninstall">Uninstall</h2>
+<p>The installed Bifrost driver can be removed with <strong>apt</strong> but you need to be careful that this could corrupt your installed OS setup since this package could remove other dependency packages. <strong>Uninstalling with this command could cause of removing more packages installed on your system</strong>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt purge mali-bifrost-wayland-driver mali-bifrost-dkms
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<h2 id="trouble-shooting">Trouble shooting</h2>
+<h3 id="cannot-get-login-to-gnome-wayland-desktop-but-x11-desktop">Cannot get login to Gnome Wayland Desktop, but X11 Desktop</h3>
+<p>Probably you didn’t select <strong>Gnome Wayland Session</strong>
+###</p>
+
+<h3 id="when-arm-mali-bifrost-is-not-working">When ARM Mali Bifrost is not working</h3>
+<p>Probably this could happen after new kernel package is updated. In such case, ARM Mali Bifrost driver must be reinstalled properly.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install</span> <span class="nt">--reinstall</span> mali-bifrost-dkms
+<span class="nv">$ </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<h3 id="error-when-install-mali-bifrost-dkms">Error when install <strong>mali-bifrost-dkms</strong></h3>
+<p>This error could be caused when the Linux header package is not installed, so highly recommend to install the package before installing Bifrost packages.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>linux-headers-<span class="si">$(</span><span class="nb">uname</span> <span class="nt">-a</span><span class="si">)</span>
+</code></pre></div></div>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Linux Factory Docs. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+

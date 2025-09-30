@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU/GPU frequency and governor</title>
+    <meta name="description" content="Linux Factory Documentation Site">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>CPU/GPU frequency and governor | Linux Factory Docs</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="CPU/GPU frequency and governor" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Linux Factory Documentation Site" />
+<meta property="og:description" content="Linux Factory Documentation Site" />
+<link rel="canonical" href="https://docs.linuxfactory.or.kr/guides/overclock.html" />
+<meta property="og:url" content="https://docs.linuxfactory.or.kr/guides/overclock.html" />
+<meta property="og:site_name" content="Linux Factory Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="CPU/GPU frequency and governor" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Linux Factory Documentation Site","headline":"CPU/GPU frequency and governor","url":"https://docs.linuxfactory.or.kr/guides/overclock.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">Linux Factory Docs</a></h1>
+    </header>
+
+    <main>
+      <h1 id="cpugpu-frequency-and-governor">CPU/GPU frequency and governor</h1>
+<blockquote>
+  <p>:warning: The commands in this section only affects to the product with S905X3 and
+S922X.</p>
+</blockquote>
+
+<h2 id="cpu">CPU</h2>
+<p>The min/max CPU frequency and governor can be changed by editing
+‘/etc/default/cpufrequtils’ and it will be applied from next booting.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> /etc/default/cpufrequtils
+<span class="nv">GOVERNOR</span><span class="o">=</span>performance
+<span class="nv">MIN_SPEED</span><span class="o">=</span><span class="s2">"1000MHZ"</span>
+<span class="nv">MAX_SPEED</span><span class="o">=</span><span class="s2">"2016MHZ"</span>
+</code></pre></div></div>
+
+<p>The change in ‘/etc/default/cpufrequtils’ will affect to big.LITTLE cores at
+the same time and will use the most closet value if given freqency does not
+exist. Valid frequencies are able to check with this command.</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> /sys/devices/system/cpu/cpufreq/policy0/scaling_available_frequencies
+<span class="nv">$ </span><span class="nb">cat</span> /sys/devices/system/cpu/cpufreq/policy2/scaling_available_frequencies
+</code></pre></div></div>
+
+<h3 id="overclocking">Overclocking</h3>
+
+<p>CPU overclock can happen if you change the value of ‘MAX_SPEED’ in
+/etc/defaults/cpufrequtils but could lead malfunction or shutdown
+unexpected since they are not officially supported by SoC vendor.
+The feasible freqencies varies to the CPU.</p>
+
+<h4 id="odroid-n2">ODROID-N2</h4>
+<ul>
+  <li>1908MHz</li>
+  <li>2004MHz</li>
+</ul>
+
+<h4 id="odroid-n2plus">ODROID-N2Plus</h4>
+<ul>
+  <li>2304MHz</li>
+  <li>2400MHz</li>
+</ul>
+
+<h4 id="odroid-c4hc4">ODROID-C4/HC4</h4>
+<ul>
+  <li>2016MHz</li>
+  <li>2100MHz</li>
+</ul>
+
+<h2 id="gpu">GPU</h2>
+
+<p>The min/max GPU frequency and governor can be changed by editing
+‘/etc/default/gpufrequtils’ and it will be applied from next booting.</p>
+
+<blockquote>
+  <p>:warning: The commands in this section only after Linux kernel 5.10.16.</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">uname</span> <span class="nt">-a</span>
+Linux focal-server 5.10.0-odroid-arm64 <span class="c">#1 SMP PREEMPT Ubuntu 5.10.16-202102191318~groovy (2021-02-19) aarch64 aarch64 aarch64 GNU/Linux</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">cat</span> /etc/default/gpufrequtils
+<span class="c"># GOVERNORS:    [userspace powersave performance simple_ondemand]</span>
+<span class="c"># FREQUENCIES : [124999998 249999996 285714281 399999994</span>
+<span class="c">#                499999992 666666656 799999987]</span>
+<span class="nv">GOVERNOR</span><span class="o">=</span>performance
+<span class="nv">MIN_FREQ</span><span class="o">=</span>499999992
+<span class="nv">MAX_FREQ</span><span class="o">=</span>799999987
+</code></pre></div></div>
+<p>The change in ‘/etc/default/gpufrequtils’ will affect to GPU and will use the
+most closest value if given frequency does not exist. Valid frequencies are
+able to check with this command.</p>
+
+<h4 id="with-mali-bifrost-driver">With Mali Bifrost driver</h4>
+<ul>
+<li>/sys/devices/platform/soc/ffe40000.gpu/misc/mali0/device/devfreq/ffe40000.gpu/governor</li>
+<li>/sys/devices/platform/soc/ffe40000.gpu/misc/mali0/device/devfreq/ffe40000.gpu/min_freq</li>
+<li>/sys/devices/platform/soc/ffe40000.gpu/misc/mali0/device/devfreq/ffe40000.gpu/max_freq</li>
+</ul>
+
+<h4 id="with-mali-panfrost-driver">With Mali Panfrost driver</h4>
+<ul>
+<li>/sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu/governor</li>
+<li>/sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu/max_freq</li>
+<li>/sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu/min_freq</li>
+</ul>
+
+<h3 id="overclocking-1">Overclocking</h3>
+
+<p>GPU overclock can happen if you change the value of ‘MAX_SPEED’ in
+/etc/defaults/gpufrequtils but could lead malfunction or shutdown
+unexpected since they are not officially supported by SoC vendor.
+The fasible frequency for overclocking is only 1000MHz.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">MAX_FREQ</span><span class="o">=</span>1000000000
+</code></pre></div></div>
+
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Linux Factory Docs. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+
